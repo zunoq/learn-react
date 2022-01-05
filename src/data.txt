@@ -1,0 +1,12 @@
+Lifecycle of Components (https://www.w3schools.com/react/react_lifecycle.asp)
+    3 giai doan: Mounting, Updating, Unmounting
+        1. Mounting:
+            Co 4 phuong thuc de goi Mouting: 
+                1. constructor()
+                    Duoc goi dau tien, khi khoi tao component. La noi luu cac gia tri khoi tao
+                2. getDerivedStateFromProps()
+                    Goi ngay truoc khi ket xuat mot thanh phan trong DOM
+                    La noi de dat cac trang thai cua doi tuong tu 
+                3. render()
+                4. componentDidMount()
+                

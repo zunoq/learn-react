@@ -1,34 +1,24 @@
 import React, { useState } from 'react'
 import Job from './Job/Job'
 import './TodoList.css'
-const TodoList = ({ todo, setTodo, todos, handleAddTodo }) => {
-    console.log(todos)
+import InputForm from './InputForm/InputForm'
+const TodoList = () => {
+    const [todos, setTodos] = useState([])
     return (
         <div >
-            <div id="newtask">
-                <h3>Name</h3>
-                <input
-                    className='labelInput'
-                    value={todo}
-                    onChange={e => setTodo(e.target.value)}
-                    type="text" id='todo'
-                    placeholder="Type a job here..."
-                />
-
-                <button className="btn" id="push" onClick={handleAddTodo}>ADD</button>
+            <InputForm
+                todos={todos}
+                setTodos={setTodos}
+            />
+            <div id="tasks">
+                {todos.map((todo, index) => (
+                    <Job
+                        key={index}
+                        todo={todo}
+                    />
+                ))}
             </div>
-            <div id='tasks'>
-                <div>
-                    {todos.map((todo, index) => (
-                        <Job
-                            key={index}
-                            todo={todo}
-                        />
-                    ))}
-                </div>
-            </div>
-        </div >
-
+        </div>
     )
 }
 

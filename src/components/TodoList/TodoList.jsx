@@ -11,10 +11,13 @@ const TodoList = () => {
                 setTodos={setTodos}
             />
             <div id="tasks">
-                {todos.map((todo, index) => (
+                {todos.map((todo) => (
                     <Job
-                        key={index}
+                        key={todo.id}
                         todo={todo}
+                        todos={todos}
+                        setTodos={setTodos}
+
                     />
                 ))}
             </div>

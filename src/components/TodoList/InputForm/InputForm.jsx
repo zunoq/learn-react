@@ -4,8 +4,7 @@ const InputForm = ({ todos, setTodos }) => {
     var date = new Date();
     var timeBegin = date.getHours() + ':' + (date.getMinutes())
     var timeEnd = (date.getHours() + 1) + ':' + (date.getMinutes())
-    // console.log(timeBegin)
-    // console.log(timeEnd)
+    console.log(timeEnd)
     const [id, setId] = useState(0)
     const [todo, setTodo] = useState({
         id: id,
@@ -32,6 +31,7 @@ const InputForm = ({ todos, setTodos }) => {
         })
         setId(id => id + 1)
     }
+
     console.log(todos)
     return (
         <div id="newtask">
@@ -54,7 +54,6 @@ const InputForm = ({ todos, setTodos }) => {
                 id='todo'
             />
             <h3>Time End</h3>
-            <h3>abc</h3>
             <input
                 className='labelInput'
                 value={todo.timeEnd}

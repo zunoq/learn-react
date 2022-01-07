@@ -8,13 +8,13 @@ const TodoList = () => {
     const myJSON = JSON.parse(myLocalStorages)
     const [todos, setTodos] = useState(myJSON ?? [])
     const [isEdit, setIsEdit] = useState(false);
-    const [showAdd, setShowAdd] = useState(false)
+    const [showForm, setShowForm] = useState(false)
     const todosLenght = todos.length
 
     localStorage.setItem("todolist", JSON.stringify(todos))
 
-    const handleShowAdd = () => {
-        setShowAdd(!showAdd)
+    const handleShowForm = () => {
+        setShowForm(!showForm)
     }
 
     const handleEditJob = (id) => {
@@ -36,12 +36,13 @@ const TodoList = () => {
                                 isEdit={isEdit}
                                 setIsEdit={setIsEdit}
                                 handleEditJob={handleEditJob}
+                                handleShowForm={handleShowForm}
                             />
                         ))
                 }
-                {!showAdd ?
+                {!showForm ?
                     <button
-                        onClick={() => handleShowAdd()}
+                        onClick={() => handleShowForm()}
                         className="btn btn-show-add"
                     >
                         ADD A TODO
@@ -51,7 +52,7 @@ const TodoList = () => {
                         setTodos={setTodos}
                         isEdit={isEdit}
                         handleEditJob={handleEditJob}
-                        handleShowAdd={handleShowAdd}
+                        handleShowForm={handleShowForm}
                     />
                 }
             </div>

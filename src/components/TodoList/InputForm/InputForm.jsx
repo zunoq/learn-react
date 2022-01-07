@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowAdd }) => {
+const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowForm }) => {
     var date = new Date();
     var timeBegin = date.getHours() + ':' + (date.getMinutes())
     var timeEnd = (date.getHours() + 1) + ':' + (date.getMinutes())
@@ -44,9 +44,9 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowA
     return (
         <div id="newtask">
             {isEdit ?
-                <h2>EDIT A TODO</h2>
+                <h2 onClick={handleShowForm}>EDIT A TODO</h2>
                 :
-                <h2 onClick={handleShowAdd}>ADD A TODO</h2>
+                <h2 onClick={handleShowForm}>ADD A TODO</h2>
             }
             <h3>Job name</h3>
             <input
@@ -75,9 +75,21 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowA
             />
             {
                 isEdit ?
-                    <button className="btn btn-submit" id="push" onClick={handleEditJob}>EDIT</button>
+                    <button
+                        className="btn btn-submit"
+                        id="push"
+                        onClick={() => { handleEditJob(); handleShowForm() }}
+                    >
+                        EDIT
+                    </button>
                     :
-                    <button className="btn btn-submit" id="push" onClick={handleSubmit}>ADD</button>
+                    <button
+                        className="btn btn-submit"
+                        id="push"
+                        onClick={() => { handleEditJob(); handleShowForm() }}
+                    >
+                        ADD
+                    </button>
 
             }
 

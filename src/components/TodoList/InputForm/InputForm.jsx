@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ todos, setTodos }) => {
+const InputForm = ({ todos, setTodos, isEdit, handleEditJob }) => {
     var date = new Date();
     var timeBegin = date.getHours() + ':' + (date.getMinutes())
     var timeEnd = (date.getHours() + 1) + ':' + (date.getMinutes())
@@ -35,7 +35,11 @@ const InputForm = ({ todos, setTodos }) => {
     console.log(todos)
     return (
         <div id="newtask">
-            <h2>ADD A TODO</h2>
+            {isEdit ?
+                <h2>EDIT A TODO</h2>
+                :
+                <h2>ADD A TODO</h2>
+            }
             <h3>Job name</h3>
             <input
                 className='labelInput'
@@ -61,8 +65,14 @@ const InputForm = ({ todos, setTodos }) => {
                 type="time"
                 id='todo'
             />
+            {
+                isEdit ?
+                    <button className="btn" id="push" onClick={handleEditJob}>EDIT</button>
+                    :
+                    <button className="btn" id="push" onClick={handleSubmit}>ADD</button>
 
-            <button className="btn" id="push" onClick={handleSubmit}>ADD</button>
+            }
+
         </div>
     )
 }

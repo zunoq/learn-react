@@ -1,25 +1,42 @@
-import React from 'react'
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import React, { useState } from 'react'
+import { FaTrash, FaPencilAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import './Job.css'
-const Job = ({ todo, todos, setTodos, handleEditJob }) => {
+const Job = ({ todo, setTodo, todos, setTodos, handleEditJob }) => {
     console.log(todo)
     const handleRemoveJob = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id))
     }
-
-    console.log(todos)
+    const [isDone, setIsDone] = useState(todo.isDone);
+    const handleSetIsDone = () => {
+        setIsDone(() => !isDone)
+    }
+    console.log(isDone)
     return (
-        <div className='task'>
-            <span> {todo.jobName} </span>
-            <button onClick={() => handleRemoveJob(todo.id)}>
-                <FaTrash
-                    style={{ fontSize: "20px" }}
-                />
-            </button>
-            <button onClick={() => handleEditJob()}>
-                <FaEdit style={{ fontSize: "20px" }} />
-            </button>
+        <div
+            className='task'
+            style={isDone ? { backgroundColor: '#42ba96' } : { backgroundColor: '#808080' }}
+        >
+            <div className='task-info'>
+                <h2 className='task-title'>
+                    {todo.jobName}
+                </h2>
+                <p className='task-time'>From {todo.timeBegin} to {todo.timeEnd} </p>
+            </div>
+            <div className='task-actions'>
+                <button onClick={() => handleRemoveJob(todo.id)}>
+                    <FaTrash className='icon-btn' />
+                </button>
+                <button onClick={() => handleEditJob()}>
+                    <FaPencilAlt className='icon-btn' />
+                </button>
+                <button onClick={() => handleSetIsDone(todo.isDone)} >
+                    {!isDone ?
+                        <FaCheckCircle className='icon-btn' />
+                        : <FaTimesCircle className='icon-btn' />
+                    }
+                </button>
+            </div>
 
         </div >
     )

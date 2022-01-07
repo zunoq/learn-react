@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ todos, setTodos, isEdit, handleEditJob }) => {
+const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowAdd }) => {
     var date = new Date();
     var timeBegin = date.getHours() + ':' + (date.getMinutes())
     var timeEnd = (date.getHours() + 1) + ':' + (date.getMinutes())
@@ -25,11 +25,19 @@ const InputForm = ({ todos, setTodos, isEdit, handleEditJob }) => {
         setTodo((todo) => ({ ...todo, timeEnd: event.target.value, }))
 
     }
+    console.log(todo)
     const handleSubmit = () => {
         setTodos((prev) => {
             return [...prev, todo]
         })
-        setId(id => id + 1)
+        setId(id => Math.floor(Math.random() * 10000))
+        setTodo({
+            id: id,
+            jobName: '',
+            timeBegin: timeBegin,
+            timeEnd: timeEnd,
+            isDone: false,
+        })
     }
 
     console.log(todos)
@@ -38,7 +46,7 @@ const InputForm = ({ todos, setTodos, isEdit, handleEditJob }) => {
             {isEdit ?
                 <h2>EDIT A TODO</h2>
                 :
-                <h2>ADD A TODO</h2>
+                <h2 onClick={handleShowAdd}>ADD A TODO</h2>
             }
             <h3>Job name</h3>
             <input
@@ -67,9 +75,9 @@ const InputForm = ({ todos, setTodos, isEdit, handleEditJob }) => {
             />
             {
                 isEdit ?
-                    <button className="btn" id="push" onClick={handleEditJob}>EDIT</button>
+                    <button className="btn btn-submit" id="push" onClick={handleEditJob}>EDIT</button>
                     :
-                    <button className="btn" id="push" onClick={handleSubmit}>ADD</button>
+                    <button className="btn btn-submit" id="push" onClick={handleSubmit}>ADD</button>
 
             }
 

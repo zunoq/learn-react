@@ -6,9 +6,13 @@ const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, handleShowForm }) 
     const handleRemoveJob = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id))
     }
-    const [isDone, setIsDone] = useState(todo.isDone);
-    const handleSetIsDone = () => {
-        setTodos([todo.isDone = !todo.isDone])
+    // const [isDone, setIsDone] = useState(todo.isDone);
+    const handleSetIsDone = (todo) => {
+        setTodos(todos.map((x) => {
+            if (x.id !== todo.id)
+                return x
+            return { ...x, isDone: !todo.isDone }
+        }))
     }
     console.log(todos)
     return (

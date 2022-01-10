@@ -73,26 +73,13 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowF
                 type="time"
                 id='todo'
             />
-            {
-                isEdit ?
-                    <button
-                        className="btn btn-submit"
-                        id="push"
-                        onClick={() => { handleEditJob(); handleShowForm() }}
-                    >
-                        EDIT
-                    </button>
-                    :
-                    <button
-                        className="btn btn-submit"
-                        id="push"
-                        onClick={() => { handleEditJob(); handleShowForm() }}
-                    >
-                        ADD
-                    </button>
-
-            }
-
+            <button
+                className="btn btn-submit"
+                id="push"
+                onClick={() => { handleSubmit(); handleShowForm() }}
+            >
+                ADD
+            </button>
         </div>
     )
 }

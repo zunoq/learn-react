@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import './InputForm.css'
 const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowForm }) => {
     var date = new Date();
-    var timeBegin = date.getHours() + ':' + (date.getMinutes())
-    var timeEnd = (date.getHours() + 1) + ':' + (date.getMinutes())
+    var hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+    var minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
+    var timeBegin = hour + ':' + minutes
+    var timeEnd = `${hour + 1}:${minutes}`
     console.log(timeEnd)
-    const [id, setId] = useState(0)
+    const [id, setId] = useState(Math.floor(Math.random() * 1000000))
     const [todo, setTodo] = useState({
         id: id,
         jobName: '',
@@ -14,23 +16,16 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowF
         isDone: false,
     })
 
-    const handleAddJob = (event) => {
-        setTodo((todo) => ({ ...todo, jobName: event.target.value, id: id }))
+    const handleChange = (event) => {
+        // event.preventDefault()
+        setTodo((todo) => ({ ...todo, [event.target.name]: event.target.value }))
+        // setId((id) => { Math.floor(Math.random() * 100) })
     }
-    const handleAddTimeBegin = (event) => {
-        setTodo((todo) => ({ ...todo, timeBegin: event.target.value, }))
-
-    }
-    const handleAddTimeEnd = (event) => {
-        setTodo((todo) => ({ ...todo, timeEnd: event.target.value, }))
-
-    }
-    console.log(todo)
     const handleSubmit = () => {
         setTodos((prev) => {
             return [...prev, todo]
         })
-        setId(id => Math.floor(Math.random() * 10000))
+
         setTodo({
             id: id,
             jobName: '',
@@ -48,31 +43,38 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowF
                 :
                 <h2 onClick={handleShowForm}>ADD A TODO</h2>
             }
-            <h3>Job name</h3>
-            <input
-                className='labelInput'
-                value={todo.jobName}
-                onChange={handleAddJob}
-                type="text" id='todo'
-                placeholder="Type a job here..."
-            />
-            <h3>Time begin</h3>
+            <form action="" onSubmit={handleSubmit}>
 
-            <input
-                className='labelInput'
-                value={todo.timeBegin}
-                onChange={handleAddTimeBegin}
-                type="time"
-                id='todo'
-            />
-            <h3>Time End</h3>
-            <input
-                className='labelInput'
-                value={todo.timeEnd}
-                onChange={handleAddTimeEnd}
-                type="time"
-                id='todo'
-            />
+                <h3>Job name</h3>
+                <input
+                    className='labelInput'
+                    name="jobName"
+                    value={todo.jobName}
+                    onChange={handleChange}
+                    type="text" id='todo'
+                    placeholder="Type a job here..."
+                />
+                <h3>Time begin</h3>
+
+                <input
+                    className='labelInput'
+                    name="timeBegin"
+                    value={todo.timeBegin}
+                    onChange={handleChange}
+                    type="time"
+                    id='todo'
+                />
+                <h3>Time End</h3>
+                <input
+                    className='labelInput'
+                    name="timeEnd"
+                    value={todo.timeEnd}
+                    onChange={handleChange}
+                    type="time"
+                    id='todo'
+
+                />
+            </form>
             <button
                 className="btn btn-submit"
                 id="push"

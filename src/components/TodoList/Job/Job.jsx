@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { FaTrash, FaPencilAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import './Job.css'
-const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, handleShowForm }) => {
+const Job = ({ todo,setTodo, todos, setTodos, handleEditJob, handleShowForm }) => {
     const handleRemoveJob = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id))
     }
-    // const [isDone, setIsDone] = useState(todo.isDone);
     const handleSetIsDone = (todo) => {
         setTodos(todos.map((x) => {
             if (x.id !== todo.id)
@@ -14,6 +13,7 @@ const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, handleShowForm }) 
             return { ...x, isDone: !todo.isDone }
         }))
     }
+
     console.log(todos)
     return (
         <div

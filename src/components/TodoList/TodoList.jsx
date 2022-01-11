@@ -8,7 +8,9 @@ const TodoList = () => {
     const myJSON = JSON.parse(myLocalStorages)
     const [todos, setTodos] = useState(myJSON ?? [])
     const [isEdit, setIsEdit] = useState(false);
-    const [showForm, setShowForm] = useState(false)
+    const [showList, setShowList] = useState(true);
+    const [showForm, setShowForm] = useState(false);
+    const [filterJob, setFilterJob] = useState(true);
     const todosLenght = todos.length
 
     localStorage.setItem("todolist", JSON.stringify(todos))
@@ -16,29 +18,75 @@ const TodoList = () => {
     const handleShowForm = () => {
         setShowForm(!showForm)
     }
+    const handleshowAllList = () => {
+        setShowList(true)
+    }
+    const handleFilterFormComplete = () => {
+        setShowList(false)
+        setFilterJob(true)
+    }
+    const handleFilterFormDoing = () => {
+        setShowList(false)
+        setFilterJob(false)
+    }
 
     const handleEditJob = (id) => {
         setIsEdit(() => !isEdit)
     }
+
+    console.log(filterJob)
+
     return (
         <div >
             <h1>TODO LIST</h1>
+            <div className="filter-controller">
+                <button
+                    className="btn btn-filter"
+                    onClick={handleshowAllList}
+                >
+                    ALL
+                </button>
+                <button
+                    className="btn btn-filter"
+                    onClick={handleFilterFormComplete}
+
+                >
+                    COMPLETED
+                </button>
+                <button
+                    className="btn btn-filter"
+                    onClick={handleFilterFormDoing}
+                >
+                    DOING
+                </button>
+            </div>
             <div id="tasks">
                 {
-                    (todosLenght == 0) ?
+                    (todosLenght === 0) ?
                         <p className="alert">You don't have any Todo. Let's add something!</p>
-                        : todos.map((todo) => (
-                            <Job
-                                key={todo.id}
-                                todo={todo}
-                                todos={todos}
-                                setTodos={setTodos}
-                                isEdit={isEdit}
-                                setIsEdit={setIsEdit}
-                                handleEditJob={handleEditJob}
-                                handleShowForm={handleShowForm}
-                            />
-                        ))
+                        : !showList ?
+                            todos.map((todo) => {
+                                if (todo.isDone === filterJob)
+                                    return <Job
+                                        key={todo.id}
+                                        todo={todo}
+                                        todos={todos}
+                                        setTodos={setTodos}
+                                        handleEditJob={handleEditJob}
+                                        handleShowForm={handleShowForm}
+                                    />
+                            })
+                            : todos.map((todo) => (
+
+                                <Job
+                                    key={todo.id}
+                                    todo={todo}
+                                    todos={todos}
+                                    setTodos={setTodos}
+                                    handleEditJob={handleEditJob}
+                                    handleShowForm={handleShowForm}
+                                />
+                            ))
                 }
                 {!showForm ?
                     <button
@@ -51,7 +99,6 @@ const TodoList = () => {
                         todos={todos}
                         setTodos={setTodos}
                         isEdit={isEdit}
-                        handleEditJob={handleEditJob}
                         handleShowForm={handleShowForm}
                     />
                 }

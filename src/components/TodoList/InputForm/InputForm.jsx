@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowForm }) => {
+const InputForm = ({ todos, setTodos, isEdit, handleShowForm }) => {
     var date = new Date();
-    var hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+    var hourBegin = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+    var hourEnd = (date.getHours() + 1) >= 10 ? (date.getHours() + 1) : `0${(date.getHours() + 1)}`
     var minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-    var timeBegin = hour + ':' + minutes
-    var timeEnd = `${hour + 1}:${minutes}`
-    console.log(timeEnd)
+    var timeBegin = hourBegin + ':' + minutes
+    var timeEnd = hourEnd + ':' + minutes
     const [id, setId] = useState(Math.floor(Math.random() * 1000000))
     const [todo, setTodo] = useState({
         id: id,
@@ -17,11 +17,12 @@ const InputForm = ({ todos, setTodos, isEdit, isDone, handleEditJob, handleShowF
     })
 
     const handleChange = (event) => {
-        // event.preventDefault()
         setTodo((todo) => ({ ...todo, [event.target.name]: event.target.value }))
         // setId((id) => { Math.floor(Math.random() * 100) })
     }
-    const handleSubmit = () => {
+
+    const handleSubmit = (event) => {
+
         setTodos((prev) => {
             return [...prev, todo]
         })

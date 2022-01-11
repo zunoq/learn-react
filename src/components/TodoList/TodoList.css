@@ -21,7 +21,6 @@ h1 {
     position: relative;
     font-weight: 500;
     font-size: 16px;
-    background-color: #0d75ec;
     border: none;
     color: #ffffff;
     cursor: pointer;
@@ -30,7 +29,17 @@ h1 {
     border-radius: 5px;
     font-family: "Poppins", sans-serif;
 }
+.filter-controller {
+    justify-content: space-around;
+    display: flex;
+}
+.btn-filter {
+    width: 30%;
+    margin: 30px 0px 30px 0px;
+    background-color: #0d75ec;
+}
 .btn-show-add {
+    background-color: #0d75ec;
     width: 30%;
     margin: 30px 0px 30px -15%;
     left: 50%;

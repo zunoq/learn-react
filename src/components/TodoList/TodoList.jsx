@@ -9,7 +9,7 @@ const TodoList = () => {
     const [todos, setTodos] = useState(myJSON ?? [])
     const [isEdit, setIsEdit] = useState(false);
     const [showList, setShowList] = useState(true);
-    const [showForm, setShowForm] = useState(false);
+    // const [showForm, setShowForm] = useState(false);
     const [filterJob, setFilterJob] = useState(true);
     const todosLenght = todos.length
 
@@ -97,7 +97,6 @@ const TodoList = () => {
                     //         ADD A TODO
                     //     </button> :
                     <InputForm
-                        todos={todos}
                         setTodos={setTodos}
                         isEdit={isEdit}
                     // handleShowForm={handleShowForm}

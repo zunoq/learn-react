@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ todos, setTodos, isEdit }) => {
+const InputForm = ({ setTodos, isEdit }) => {
     var date = new Date();
     var hourBegin = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
     var hourEnd = (date.getHours() + 1) >= 10 ? (date.getHours() + 1) : `0${(date.getHours() + 1)}`
     var minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
     var timeBegin = hourBegin + ':' + minutes
     var timeEnd = hourEnd + ':' + minutes
-    const [id, setId] = useState(Math.floor(Math.random() * 1000000))
+    const [id, setId] = useState(date.getTime())
     const [todo, setTodo] = useState({
         id: id,
         jobName: '',
@@ -15,10 +15,9 @@ const InputForm = ({ todos, setTodos, isEdit }) => {
         timeEnd: timeEnd,
         isDone: false,
     })
-
+    console.log(todo)
     const handleChange = (event) => {
         setTodo((todo) => ({ ...todo, [event.target.name]: event.target.value }))
-        // setId((id) => { Math.floor(Math.random() * 100) })
     }
 
     const handleSubmit = (event) => {
@@ -26,7 +25,6 @@ const InputForm = ({ todos, setTodos, isEdit }) => {
         setTodos((prev) => {
             return [...prev, todo]
         })
-
         setTodo({
             id: id,
             jobName: '',
@@ -36,7 +34,7 @@ const InputForm = ({ todos, setTodos, isEdit }) => {
         })
     }
 
-    console.log(todos)
+    console.log(id)
     return (
         <div id="newtask">
             {isEdit ?
@@ -54,6 +52,7 @@ const InputForm = ({ todos, setTodos, isEdit }) => {
                     onChange={handleChange}
                     type="text" id='todo'
                     placeholder="Type a job here..."
+                    autoComplete="off"
                 />
                 <h3>Time begin</h3>
 

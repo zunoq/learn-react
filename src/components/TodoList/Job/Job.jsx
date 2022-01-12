@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaTrash, FaPencilAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import './Job.css'
-const Job = ({ todo,setTodo, todos, setTodos, handleEditJob, handleShowForm }) => {
+const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, handleShowForm }) => {
     const handleRemoveJob = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id))
     }
@@ -31,8 +31,7 @@ const Job = ({ todo,setTodo, todos, setTodos, handleEditJob, handleShowForm }) =
                     <FaTrash className='icon-btn' />
                 </button>
                 <button onClick={() => {
-                    handleEditJob();
-                    handleShowForm()
+                    handleEditJob()
                 }}>
                     <FaPencilAlt className='icon-btn' />
                 </button>

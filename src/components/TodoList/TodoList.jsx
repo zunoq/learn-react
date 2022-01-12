@@ -15,9 +15,9 @@ const TodoList = () => {
 
     localStorage.setItem("todolist", JSON.stringify(todos))
 
-    const handleShowForm = () => {
-        setShowForm(!showForm)
-    }
+    // const handleShowForm = () => {
+    //     setShowForm(!showForm)
+    // }
     const handleshowAllList = () => {
         setShowList(true)
     }
@@ -73,7 +73,7 @@ const TodoList = () => {
                                         todos={todos}
                                         setTodos={setTodos}
                                         handleEditJob={handleEditJob}
-                                        handleShowForm={handleShowForm}
+                                    // handleShowForm={handleShowForm}
                                     />
                             })
                             : todos.map((todo) => (
@@ -84,22 +84,23 @@ const TodoList = () => {
                                     todos={todos}
                                     setTodos={setTodos}
                                     handleEditJob={handleEditJob}
-                                    handleShowForm={handleShowForm}
+                                // handleShowForm={handleShowForm}
                                 />
                             ))
                 }
-                {!showForm ?
-                    <button
-                        onClick={() => handleShowForm()}
-                        className="btn btn-show-add"
-                    >
-                        ADD A TODO
-                    </button> :
+                {
+                    // !showForm ?
+                    //     <button
+                    //         onClick={() => handleShowForm()}
+                    //         className="btn btn-show-add"
+                    //     >
+                    //         ADD A TODO
+                    //     </button> :
                     <InputForm
                         todos={todos}
                         setTodos={setTodos}
                         isEdit={isEdit}
-                        handleShowForm={handleShowForm}
+                    // handleShowForm={handleShowForm}
                     />
                 }
             </div>

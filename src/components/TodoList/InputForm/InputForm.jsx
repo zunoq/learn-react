@@ -9,11 +9,8 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
     var timeEnd = hourEnd + ':' + minutes
 
     const [input, setInput] = useState('');
-
-
-    const [id, setId] = useState(date.getTime())
     const [todo, setTodo] = useState({
-        id: id,
+        id: date.getTime(),
         jobName: '',
         timeBegin: timeBegin,
         timeEnd: timeEnd,
@@ -25,13 +22,12 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
     const handleUpdate = (event) => {
         console.log(input);
     }
-    const handleSubmit = () => {
-
+    const handleSubmit = (event) => {
         setTodos((prev) => {
             return [...prev, todo]
         })
         setTodo({
-            id: id,
+            id: date.getTime(),
             jobName: '',
             timeBegin: timeBegin,
             timeEnd: timeEnd,

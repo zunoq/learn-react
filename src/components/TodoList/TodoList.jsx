@@ -7,55 +7,66 @@ const TodoList = () => {
     const myLocalStorages = localStorage.getItem('todolist')
     const myJSON = JSON.parse(myLocalStorages)
     const [todos, setTodos] = useState(myJSON ?? [])
-    const [isEdit, setIsEdit] = useState(false);
     const [showList, setShowList] = useState(true);
-    // const [showForm, setShowForm] = useState(false);
     const [filterJob, setFilterJob] = useState(true);
     const todosLenght = todos.length
+    // const [showForm, setShowForm] = useState(false);
+
+    const [isEdit, setIsEdit] = useState(false);
+    const [editItem, setEditItem] = useState();
 
     localStorage.setItem("todolist", JSON.stringify(todos))
 
-    // const handleShowForm = () => {
-    //     setShowForm(!showForm)
-    // }
-    const handleshowAllList = () => {
+    const handleshowAllJob = () => {
         setShowList(true)
     }
-    const handleFilterFormComplete = () => {
+    const handleFilterJobComplete = () => {
         setShowList(false)
         setFilterJob(true)
     }
-    const handleFilterFormDoing = () => {
+    const handleFilterJobDoing = () => {
         setShowList(false)
         setFilterJob(false)
     }
 
     const handleEditJob = (id) => {
-        setIsEdit(() => !isEdit)
+        setIsEdit(!isEdit)
+        setEditItem(todos.find((x) => {
+            return x.id === id
+        }))
+        console.log(isEdit)
+        console.log(editItem)
     }
-
-    console.log(filterJob)
-
+    const handleRemoveJob = (id) => {
+        setTodos(todos.filter((todo) => todo.id !== id))
+    }
+    const handleSetIsDone = (todo) => {
+        setTodos(todos.map((x) => {
+            if (x.id !== todo.id)
+                return x
+            return { ...x, isDone: !todo.isDone }
+        }))
+    }
     return (
         <div >
             <h1>TODO LIST</h1>
             <div className="filter-controller">
                 <button
                     className="btn btn-filter"
-                    onClick={handleshowAllList}
+                    onClick={handleshowAllJob}
                 >
                     ALL
                 </button>
                 <button
                     className="btn btn-filter"
-                    onClick={handleFilterFormComplete}
+                    onClick={handleFilterJobComplete}
 
                 >
                     COMPLETED
                 </button>
                 <button
                     className="btn btn-filter"
-                    onClick={handleFilterFormDoing}
+                    onClick={handleFilterJobDoing}
                 >
                     DOING
                 </button>
@@ -70,10 +81,11 @@ const TodoList = () => {
                                     return <Job
                                         key={todo.id}
                                         todo={todo}
-                                        todos={todos}
-                                        setTodos={setTodos}
                                         handleEditJob={handleEditJob}
-                                    // handleShowForm={handleShowForm}
+                                        handleSetIsDone={handleSetIsDone}
+                                        handleRemoveJob={handleRemoveJob}
+
+
                                     />
                             })
                             : todos.map((todo) => (
@@ -81,27 +93,18 @@ const TodoList = () => {
                                 <Job
                                     key={todo.id}
                                     todo={todo}
-                                    todos={todos}
-                                    setTodos={setTodos}
                                     handleEditJob={handleEditJob}
-                                // handleShowForm={handleShowForm}
+                                    handleSetIsDone={handleSetIsDone}
+                                    handleRemoveJob={handleRemoveJob}
                                 />
                             ))
                 }
-                {
-                    // !showForm ?
-                    //     <button
-                    //         onClick={() => handleShowForm()}
-                    //         className="btn btn-show-add"
-                    //     >
-                    //         ADD A TODO
-                    //     </button> :
-                    <InputForm
-                        setTodos={setTodos}
-                        isEdit={isEdit}
-                    // handleShowForm={handleShowForm}
-                    />
-                }
+                <InputForm
+                    setTodos={setTodos}
+                    isEdit={isEdit}
+                    editItem={editItem}
+                    setEditItem={setEditItem}
+                />
             </div>
 
         </div>

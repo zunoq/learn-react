@@ -1,19 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTrash, FaPencilAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import './Job.css'
-const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, }) => {
-    const handleRemoveJob = (id) => {
-        setTodos(todos.filter((todo) => todo.id !== id))
-    }
-    const handleSetIsDone = (todo) => {
-        setTodos(todos.map((x) => {
-            if (x.id !== todo.id)
-                return x
-            return { ...x, isDone: !todo.isDone }
-        }))
-    }
-    console.log(todos)
+const Job = ({ todo, isEdit, handleEditJob, handleSetIsDone, handleRemoveJob }) => {
+
     return (
         <div
             className='task'
@@ -30,7 +20,7 @@ const Job = ({ todo, setTodo, todos, setTodos, handleEditJob, }) => {
                     <FaTrash className='icon-btn' />
                 </button>
                 <button onClick={() => {
-                    handleEditJob()
+                    handleEditJob(todo.id)
                 }}>
                     <FaPencilAlt className='icon-btn' />
                 </button>

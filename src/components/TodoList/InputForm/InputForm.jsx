@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ setTodos, isEdit }) => {
+const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
     var date = new Date();
     var hourBegin = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
     var hourEnd = (date.getHours() + 1) >= 10 ? (date.getHours() + 1) : `0${(date.getHours() + 1)}`
     var minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
     var timeBegin = hourBegin + ':' + minutes
     var timeEnd = hourEnd + ':' + minutes
+
+    const [input, setInput] = useState('');
+
+
     const [id, setId] = useState(date.getTime())
     const [todo, setTodo] = useState({
         id: id,
@@ -15,12 +19,13 @@ const InputForm = ({ setTodos, isEdit }) => {
         timeEnd: timeEnd,
         isDone: false,
     })
-    console.log(todo)
     const handleChange = (event) => {
         setTodo((todo) => ({ ...todo, [event.target.name]: event.target.value }))
     }
-
-    const handleSubmit = (event) => {
+    const handleUpdate = (event) => {
+        console.log(input);
+    }
+    const handleSubmit = () => {
 
         setTodos((prev) => {
             return [...prev, todo]
@@ -33,27 +38,32 @@ const InputForm = ({ setTodos, isEdit }) => {
             isDone: false,
         })
     }
-
-    console.log(id)
     return (
         <div id="newtask">
-            {isEdit ?
-                <h2>EDIT A TODO</h2>
-                :
-                <h2>ADD A TODO</h2>
-            }
+            <h2>ADD A TODO</h2>
+
             <form action="" onSubmit={handleSubmit}>
 
                 <h3>Job name</h3>
-                <input
-                    className='labelInput'
-                    name="jobName"
-                    value={todo.jobName}
-                    onChange={handleChange}
-                    type="text" id='todo'
-                    placeholder="Type a job here..."
-                    autoComplete="off"
-                />
+                {isEdit ?
+                    <input
+                        className='labelInput'
+                        // name="jobName"
+                        placeholder={editItem.jobName}
+                        value={input}
+                        type="text" id='todo'
+                        autoComplete="off"
+                    />
+                    : <input
+                        className='labelInput'
+                        name="jobName"
+                        value={todo.jobName}
+                        onChange={handleChange}
+                        type="text" id='todo'
+                        placeholder="Type a job here..."
+                        autoComplete="off"
+                    />
+                }
                 <h3>Time begin</h3>
 
                 <input
@@ -75,13 +85,22 @@ const InputForm = ({ setTodos, isEdit }) => {
 
                 />
             </form>
-            <button
-                className="btn btn-submit"
-                id="push"
-                onClick={() => { handleSubmit() }}
-            >
-                ADD
-            </button>
+            {isEdit ?
+                <button
+                    className="btn btn-submit"
+                    id="push"
+                    onClick={() => { handleUpdate() }}
+                >
+                    UPDATE
+                </button>
+                : <button
+                    className="btn btn-submit"
+                    id="push"
+                    onClick={() => { handleSubmit() }}
+                >
+                    ADD
+                </button>
+            }
         </div>
     )
 }

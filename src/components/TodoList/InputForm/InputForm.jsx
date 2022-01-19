@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import './InputForm.css'
-const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
+const InputForm = ({ todos, setTodos, isEdit, editItem, setEditItem, handleUpdateSubmit }) => {
     var date = new Date();
     var hourBegin = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
     var hourEnd = (date.getHours() + 1) >= 10 ? (date.getHours() + 1) : `0${(date.getHours() + 1)}`
     var minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
     var timeBegin = hourBegin + ':' + minutes
     var timeEnd = hourEnd + ':' + minutes
-
-    const [input, setInput] = useState('');
     const [todo, setTodo] = useState({
         id: date.getTime(),
         jobName: '',
@@ -19,8 +17,9 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
     const handleChange = (event) => {
         setTodo((todo) => ({ ...todo, [event.target.name]: event.target.value }))
     }
-    const handleUpdate = (event) => {
-        console.log(input);
+    const handleUpdateChange = (event) => {
+        console.log(editItem);
+        setEditItem((editItem) => ({ ...editItem, jobName: event.target.value }))
     }
     const handleSubmit = (event) => {
         setTodos((prev) => {
@@ -33,7 +32,9 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
             timeEnd: timeEnd,
             isDone: false,
         })
+
     }
+
     return (
         <div id="newtask">
             <h2>ADD A TODO</h2>
@@ -44,9 +45,10 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
                 {isEdit ?
                     <input
                         className='labelInput'
-                        // name="jobName"
+                        name="jobName"
                         placeholder={editItem.jobName}
-                        value={input}
+                        onChange={handleUpdateChange}
+                        value={editItem.jobName}
                         type="text" id='todo'
                         autoComplete="off"
                     />
@@ -85,7 +87,7 @@ const InputForm = ({ setTodos, isEdit, editItem, setEditItem }) => {
                 <button
                     className="btn btn-submit"
                     id="push"
-                    onClick={() => { handleUpdate() }}
+                    onClick={() => { handleUpdateSubmit() }}
                 >
                     UPDATE
                 </button>

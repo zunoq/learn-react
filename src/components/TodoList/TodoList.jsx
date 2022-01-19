@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Job from './Job/Job'
 import './TodoList.css'
 import InputForm from './InputForm/InputForm'
@@ -11,11 +11,12 @@ const TodoList = () => {
     const [filterJob, setFilterJob] = useState(true);
     const todosLenght = todos.length
     // const [showForm, setShowForm] = useState(false);
-
     const [isEdit, setIsEdit] = useState(false);
     const [editItem, setEditItem] = useState();
 
-    localStorage.setItem("todolist", JSON.stringify(todos))
+    useEffect(() => {
+        localStorage.setItem("todolist", JSON.stringify(todos))
+    }, []);
 
     const handleshowAllJob = () => {
         setShowList(true)
@@ -31,11 +32,10 @@ const TodoList = () => {
 
     const handleEditJob = (id) => {
         setIsEdit(!isEdit)
-        setEditItem(todos.find((x) => {
-            return x.id === id
-        }))
-        console.log(isEdit)
-        console.log(editItem)
+        let newObject = todos.find((todo) => {
+            return todo.id === id
+        })
+        setEditItem(newObject)
     }
     const handleRemoveJob = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id))
@@ -46,6 +46,11 @@ const TodoList = () => {
                 return x
             return { ...x, isDone: !todo.isDone }
         }))
+    }
+    const handleUpdateSubmit = () => {
+        let newArray = todos
+        let updated = newArray.splice(newArray.findIndex(x => x.id === editItem.id), 1, editItem)
+        console.log(updated);
     }
     return (
         <div >
@@ -100,10 +105,12 @@ const TodoList = () => {
                             ))
                 }
                 <InputForm
+                    todos={setTodos}
                     setTodos={setTodos}
                     isEdit={isEdit}
                     editItem={editItem}
                     setEditItem={setEditItem}
+                    handleUpdateSubmit={handleUpdateSubmit}
                 />
             </div>
 

@@ -13,10 +13,8 @@ const TodoList = () => {
     // const [showForm, setShowForm] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [editItem, setEditItem] = useState();
+    localStorage.setItem("todolist", JSON.stringify(todos))
 
-    useEffect(() => {
-        localStorage.setItem("todolist", JSON.stringify(todos))
-    }, []);
 
     const handleshowAllJob = () => {
         setShowList(true)
@@ -31,7 +29,7 @@ const TodoList = () => {
     }
 
     const handleEditJob = (id) => {
-        setIsEdit(!isEdit)
+        setIsEdit(true)
         let newObject = todos.find((todo) => {
             return todo.id === id
         })
@@ -41,16 +39,21 @@ const TodoList = () => {
         setTodos(todos.filter((todo) => todo.id !== id))
     }
     const handleSetIsDone = (todo) => {
-        setTodos(todos.map((x) => {
-            if (x.id !== todo.id)
-                return x
-            return { ...x, isDone: !todo.isDone }
+        setTodos(todos.map((obj) => {
+            if (obj.id !== todo.id)
+                return obj
+            return { ...obj, isDone: !todo.isDone }
         }))
     }
-    const handleUpdateSubmit = () => {
-        let newArray = todos
-        let updated = newArray.splice(newArray.findIndex(x => x.id === editItem.id), 1, editItem)
-        console.log(updated);
+    const handleUpdateSubmit = (todo) => {
+        setTodos(todos.map((obj) => {
+
+            if (obj.id === editItem.id)
+                return obj = editItem
+            return obj
+        }))
+        setIsEdit(!isEdit)
+
     }
     return (
         <div >

@@ -37,7 +37,10 @@ const InputForm = ({ todos, setTodos, isEdit, editItem, setEditItem, handleUpdat
 
     return (
         <div id="newtask">
-            <h2>ADD A TODO</h2>
+            {isEdit ?
+                <h2>EDIT </h2>
+                : <h2>ADD A TODO</h2>
+            }
 
             <form action="" onSubmit={handleSubmit}>
 
@@ -87,7 +90,7 @@ const InputForm = ({ todos, setTodos, isEdit, editItem, setEditItem, handleUpdat
                 <button
                     className="btn btn-submit"
                     id="push"
-                    onClick={() => { handleUpdateSubmit() }}
+                    onClick={() => { handleUpdateSubmit(todo) }}
                 >
                     UPDATE
                 </button>
